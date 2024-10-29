@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des stagiaires</title>
+</head>
+<body>
+<div layout:fragment="contenu">
+    <h2 class="text-center mt-2 titre">Modification de l'encadrant de stage</h2>
+    <form th:action="@{/encstages/edit/{id}(id=${encadrantStage.id})}" th:object="${encadrantStage}" method="post">
+        <div class="d-flex mb-3">
+            <div class="form-group me-4 w-100">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="nom" th:field="*{nom}">
+                <span th:errors="*{nom}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group w-100">
+                <label for="prenom" class="form-label">prenom</label>
+                <input type="text" class="form-control" id="prenom" th:field="*{prenom}">
+                <span th:errors="*{prenom}" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex mb-3">
+            <div class="form-group me-4 w-100">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}">
+                <span th:errors="*{email}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group w-100">
+                <label for="adresse" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="adresse" th:field="*{adresse}">
+                <span th:errors="*{adresse}" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="telephone" class="form-label">Téléphone</label>
+            <input type="tel" class="form-control" id="telephone" th:field="*{telephone}">
+            <span th:errors="*{telephone}" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary me-3">Modifier les informations de l'encadrant</button>
+            <a th:href="@{/encstages}" class="btn btn-outline-dark text-dark btn-list">Liste des encadrants</a>
+        </div>
+    </form>
+    <div class="p-4 d-flex justify-content-between bg-success mt-4" th:if="${updated == 'ok'}">
+        <span class="text-white">Encadrant modifié avec succès</span>
+        <a href="#" onclick="this.parentNode.remove()" class="fw-bolder text-black text-decoration-none">&#x2715;</a>
+    </div>
+</div>
+</body>
+</html>

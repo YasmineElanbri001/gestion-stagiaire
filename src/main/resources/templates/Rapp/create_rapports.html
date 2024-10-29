@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des stagiaires</title>
+</head>
+<body>
+<div layout:fragment="contenu">
+    <h2 class="text-center mt-2 titre">Créer un nouveau rapport</h2>
+    <form th:action="@{/rapports}" th:object="${rapport}" method="post">
+        <div class="d-flex mb-3">
+            <div class="form-group me-4 w-100">
+                <label for="sujet">Sujet</label>
+                <input type="text" id="sujet" class="form-control" th:field="*{sujet}"/>
+                <span th:errors="*{sujet}" class="text-danger"></span>
+            </div>
+            <div class="form-group w-100">
+                <label for="dateSoumission">Date de Rédaction</label>
+                <input type="date" id="dateSoumission" class="form-control" th:field="*{dateSoumission}"/>
+                <span th:errors="*{dateSoumission}" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="stage" class="form-label">Stage</label>
+            <select id="stage" th:field="*{stage}" class="form-control">
+                <option value="" selected>Sélectionnez un Stage</option>
+                <option th:each="id : ${stages}"
+                        th:value="${id}"
+                        th:text="${id}">Stage
+                </option>
+            </select>
+            <span th:errors="*{stage}" class="text-danger"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary me-3">Créer le rapport</button>
+            <a th:href="@{/rapports}" class="btn btn-outline-dark text-dark btn-list">Liste des rapports</a>
+        </div>
+    </form>
+    <div class="p-4 d-flex justify-content-between bg-success mt-4" th:if="${created == 'ok'}">
+        <span class="text-white">Rapport créé avec succès</span>
+        <a href="#" onclick="this.parentNode.remove()" class="fw-bolder text-black text-decoration-none">&#x2715;</a>
+    </div>
+</div>
+</body>
+</html>

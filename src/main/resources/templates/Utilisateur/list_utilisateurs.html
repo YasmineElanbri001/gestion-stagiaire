@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des utilisateurs</title>
+</head>
+<body>
+<div layout:fragment="contenu">
+    <div class="d-flex justify-content-between align-items-center p-2">
+        <h3 class="fw-bold" th:text="'Liste des utilisateurs  : ' + ${utilisateurs.size()}"></h3>
+        <a th:href="@{/utilisateur/create}" class="btn btn-primary">
+            <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="#ffffff" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+            Ajouter un utilisateur
+        </a>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">ID</th>
+            <th scope="col">Nom d'utilisateur</th>
+            <th scope="col">Rôle</th>
+            <th scope="col">Etat</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="utilisateur : ${utilisateurs}" class="text-center align-middle">
+            <td th:text="${utilisateur.id}"></td>
+            <td th:text="${utilisateur.username}"></td>
+            <td>
+                <span th:classappend="${utilisateur.role == T(emsi.ma.stagiaire.enumeration.Role).ENCADRANT ? 'badge text-bg-primary p-2' : 'badge text-bg-danger p-2'}" class="fw-bold px-3 py-2" th:text="${utilisateur.role}"></span>
+            </td>
+            <td>
+                <span th:if="${utilisateur.active == true}" class="badge text-bg-success p-2">Active</span>
+                <span th:if="${utilisateur.active == false}" class="badge text-bg-danger p-2">inactive</span>
+            </td>
+            <td class="text-center">
+                <a th:if="${utilisateur.role == T(emsi.ma.stagiaire.enumeration.Role).ENCADRANT or utilisateur.username == connectedUser}"
+                   class="btn btn-warning me-3" th:href="@{/utilisateur/edit/{id}(id=${utilisateur.id})}">
+                    <svg fill="#000000" width="26px" height="26px" viewBox="0 0 24 24" id="update-alt-2"
+                         data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path id="primary" d="M6,5H16a2,2,0,0,1,2,2v7"
+                                  style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+                            <path id="primary-2" data-name="primary" d="M18,19H8a2,2,0,0,1-2-2V10"
+                                  style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+                            <polyline id="primary-3" data-name="primary" points="15 11 18 14 21 11"
+                                      style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></polyline>
+                            <polyline id="primary-4" data-name="primary" points="9 13 6 10 3 13"
+                                      style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></polyline>
+                        </g>
+                    </svg>
+                    &nbsp;&nbsp;Modifier&nbsp;&nbsp;
+                </a>
+                <a th:if="${utilisateur.role == T(emsi.ma.stagiaire.enumeration.Role).ENCADRANT or utilisateur.username == connectedUser}" class="btn btn-danger"
+                   th:href="@{/utilisateur/delete/{id}(id=${utilisateur.id})}"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette utilisateur ?')">
+                    <svg width="26px" height="26px" viewBox="0 0 24.00 24.00" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M10 12V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            <path d="M14 12V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            <path d="M4 7H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                                  stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#ffffff"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+                    &nbsp;&nbsp;Supprimer&nbsp;&nbsp;
+                </a>
+                <span class="fw-bold" th:if="${utilisateur.role == T(emsi.ma.stagiaire.enumeration.Role).ADMIN and utilisateur.username != connectedUser}">
+                    <svg class="me-2" height="25px" width="25px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 473.931 473.931" xml:space="preserve"
+                         fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier"
+                                                                                          stroke-linecap="round"
+                                                                                          stroke-linejoin="round"></g><g
+                            id="SVGRepo_iconCarrier"> <circle style="fill:#e5a50a;" cx="236.966" cy="236.966"
+                                                              r="236.966"></circle> <path style="fill:#F4F5F5;"
+                                                                                          d="M429.595,245.83c0,16.797-13.624,30.417-30.417,30.417H74.73c-16.797,0-30.421-13.62-30.421-30.417 v-17.743c0-16.797,13.624-30.417,30.421-30.417h324.448c16.793,0,30.417,13.62,30.417,30.417V245.83z"></path> </g></svg>
+                    Aucune action n'est autorisée.
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

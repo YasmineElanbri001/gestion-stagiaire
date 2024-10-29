@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un utilisateur</title>
+</head>
+<body>
+<div layout:fragment="contenu">
+    <h2 class="text-center mt-2 titre">Créer un nouveau utilisateur</h2>
+    <form th:action="@{/utilisateur/create}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="username" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="username" th:field="*{username}">
+            <span th:errors="*{username}" class="text-danger"></span>
+            <span th:text="${userexist}" class="text-danger"></span>
+        </div>
+        <div class="d-flex my-3">
+            <div class="form-group me-4 w-100">
+                <label for="pwd" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="pwd" th:field="*{password}">
+                <span th:errors="*{password}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group w-100">
+                <label for="repwd" class="form-label">Confirmer le mot de passe</label>
+                <input type="password" class="form-control" id="repwd" th:field="*{repassword}">
+                <span th:errors="*{repassword}" class="text-danger"></span>
+                <span th:if="${confirmer == 'non' and rpwd != 'vide'}" class="text-danger">Les mots de passe ne sont pas identiques.</span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="roleselect" class="form-label">Service</label>
+            <select id="roleselect" th:field="*{role}" class="form-select">
+                <option value="" selected>Sélectionnez le rôle</option>
+                <option th:each="role : ${T(emsi.ma.stagiaire.enumeration.Role).values()}"
+                        th:value="${role}"
+                        th:text="${role}"></option>
+            </select>
+            <span th:errors="*{role}" class="text-danger"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary me-3">Ajouter l'utilisateur</button>
+            <a th:href="@{/utilisateurs}" class="btn btn-outline-dark text-dark btn-list">Liste des utilisateurs</a>
+        </div>
+    </form>
+
+    <div class="p-4 d-flex justify-content-between bg-success mt-4" th:if="${created == 'ok'}">
+        <span class="text-white">Utilisateur créé avec succès</span>
+        <a href="#" onclick="this.parentNode.remove()" class="fw-bolder text-black text-decoration-none">&#x2715;</a>
+    </div>
+</div>
+</body>
+</html>

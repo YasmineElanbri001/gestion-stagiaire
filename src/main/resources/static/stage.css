@@ -1,0 +1,73 @@
+.btn-list:hover{
+    color:white !important
+}
+
+.conteneur{
+    backgrounsd:#EEEEEE
+}
+
+.btns nav{
+    display:flex;
+    justify-content:center;
+    background-color:#3FA2F6;
+    border-radius:4px;
+    padding:20px 8px
+}
+
+.btns nav a{
+    text-decoration:none;
+    margin: 6px;
+    padding:14px 16px;
+    border-radius: 4px;
+    background:#212A3E;
+    color: white;
+    transition : all .4s ease-out
+}
+
+.btns nav a:hover{
+    background:#D04848;
+}
+
+form{
+    border:1px solid #EEEDEB;
+    padding:20px;
+    margin:20px;
+    border-radius:4px
+}
+
+.titre{
+    background:#EEEDEB;
+    border-radius:4px;
+    padding:8px;
+    color:#45474B
+}
+
+th{
+    background:#B6BBC4 !important;
+}
+
+.bg-main-link{
+    background:#D04848 !important
+}
+
+.nb-stagiaires > span{
+     font-size:400px;
+     font-weight: bold;
+     color:#373A40
+}
+
+.nb-stagiaires h3{
+     font-size:50px;
+     font-weight: bold;
+     color:#686D76;
+     display:inline
+}
+
+td{
+     padding: 20px;
+}
+
+.service{
+     font-size: 30px;
+     font-weight: bold;
+}

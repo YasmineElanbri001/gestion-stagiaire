@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des stagiaires</title>
+</head>
+<body>
+<div layout:fragment="contenu">
+    <h2 class="text-center mt-2 titre">Modification de stage</h2>
+    <form th:action="@{/stages/edit/{id} (id=${stage.id})}" th:object="${stage}" method="post">
+        <div class="d-flex mb-3">
+            <div class="me-4 w-100">
+                <label for="dateDebut" class="form-label">Date Début:</label>
+                <input type="date" id="dateDebut" th:field="*{dateDebut}" class="form-control"/>
+                <span th:errors="*{dateDebut}" class="text-danger"></span>
+            </div>
+            <div class="w-100">
+                <label for="dateFin" class="form-label">Date Fin:</label>
+                <input type="date" id="dateFin" th:field="*{dateFin}" class="form-control"/>
+                <span th:errors="*{dateFin}" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex mb-3">
+            <div class="me-4 w-100">
+                <label for="stagiaire" class="form-label">Stagiaire:</label>
+                <select id="stagiaire" th:field="*{stagiaire.id}" class="form-select">
+                    <option th:each="stagiaire : ${stagiaires}"
+                            th:value="${stagiaire.id}"
+                            th:text="${stagiaire.nom}"></option>
+                </select>
+            </div>
+
+            <div class="w-100">
+                <label for="encadrantStage" class="form-label">Encadrant Stage</label>
+                <select id="encadrantStage" th:field="*{encadrantStage.id}" class="form-select">
+                    <option th:each="encadrantStage : ${encadrantStages}"
+                            th:value="${encadrantStage.id}"
+                            th:text="${encadrantStage.prenom}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="serviceSelect" class="form-label">Service</label>
+            <select id="serviceSelect" th:field="*{service}" class="form-select">
+                <option th:each="service : ${T(emsi.ma.stagiaire.enumeration.Services).values()}"
+                        th:value="${service}"
+                        th:text="${service}"></option>
+            </select>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary me-3">Modifier le stage</button>
+            <a th:href="@{/stages}" class="btn btn-outline-dark text-dark btn-list">Liste des stages</a>
+        </div>
+    </form>
+    <div class="p-4 d-flex justify-content-between bg-success mt-4" th:if="${updated == 'ok'}">
+        <span class="text-white">Stage modifié avec succès</span>
+        <a href="#" onclick="this.parentNode.remove()" class="fw-bolder text-black text-decoration-none">&#x2715;</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="base"
+        lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de bord</title>
+</head>
+<body>
+<div layout:fragment="contenu" class="d-flex vh-100 pt-2">
+    <div class="d-flex align-items-center justify-content-center flex-grow-1">
+        <div class="nb-stagiaires">
+            <span th:text="${nbStagiaires}"></span>
+            <h3 class="text-danger">stagiaire<span th:if="${nbStagiaires > 1}">s</span></h3>
+        </div>
+    </div>
+    <div class="border-start d-flex flex-column justify-content-center align-items-center flex-grow-1">
+        <h3 class="titre mb-4 px-4">Nombre de stages effectué dans chaque service</h3>
+        <table class="mt-4">
+            <tr th:each="service : ${stageCountMap}">
+                <td class="d-flex align-items-center">
+                    <svg class="me-2" width="27px" height="27px" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M9 3.51221C5.50442 4.74772 3 8.08143 3 12.0001C3 16.9707 7.02944 21.0001 12 21.0001C16.9706 21.0001 21 16.9707 21 12.0001C21 8.08143 18.4956 4.74772 15 3.51221"
+                                  stroke="#ff9a8f" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+                    <span class="service" th:text="${service.key}"></span>
+                </td>
+                <td>
+                    <span class="fs-3 fw-bold badge text-bg-danger" th:text="${service.value}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
